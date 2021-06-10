@@ -1,0 +1,136 @@
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/drilldown.js"></script>
+
+
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<script type="text/javascript">
+Highcharts.chart('container', {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'Drilldown'
+    },
+    xAxis: {
+      type: 'category'
+    },
+
+    legend: {
+      enabled: false
+    },
+
+    plotOptions: {
+      series: {
+        borderWidth: 0,
+        dataLabels: {
+          enabled: true,
+        }
+      }
+    },
+
+    series: [{
+      name: 'Things',
+      colorByPoint: true,
+      data: [{
+        name: 'Animals',
+        y: 5,
+        drilldown: 'animals',
+        url:''
+      }, {
+        name: 'Fruits',
+        y: 2,
+        drilldown: 'fruits',
+        url:''
+      }, {
+        name: 'Cars',
+        y: 4,
+        drilldown: 'car',
+        url:''
+      }]
+    }],
+    drilldown: {
+      series: [
+      
+      {
+        id: 'animals',
+        data: [
+          ['Cats', 4, 'animals2'],
+          ['Dogs', 2, 'fruits2'],
+        ],
+        keys: ['name', 'y','drilldown', 'url']
+      }, {
+        id: 'fruits',
+        data: [
+          ['Apples', 4]
+        ]
+      }, {
+        id: 'fruits2',
+        data: [
+          ['Apples', 4],
+          ['Oranges', 2]
+        ]
+      },
+      {
+        id:'car',
+        data: [
+        ['maruthi',2,'car1'],
+        ['hyundai',2,'car2']
+        ],keys: ['name', 'y','drilldown','url']
+      },
+      {
+        id:'car1',
+        data: [
+        ['swift',1,"https://www.google.com"],
+        ['ciaz',1,"https://www.facebook.com"]
+        ],keys:['name','y','url'],
+        point: {
+   events: {
+      click: function () {
+         if(this.options.url!=null) {
+            window.location.href = this.options.url;
+         }else{
+             window.location.href = 'https://www.yahoo.com/';
+         }
+      }
+   }
+}
+      },
+      
+      {
+        id:'car2',
+        data: [
+        ['i10',1],
+        ['i20',1]
+        ]
+      },
+      {
+        id: 'animals2',
+        data: [
+          ['Cats', 4],
+          ['Dogs', 2],
+          ['Cows', 1],
+          ['Sheep', 2],
+          ['Pigs', 1]
+        ],
+        point: {
+          events: {
+            click: function(e) {
+              hs.htmlExpand(null, {
+                pageOrigin: {
+                  x: e.pageX || e.clientX,
+                  y: e.pageY || e.clientY
+                },
+                headingText: this.series.name,
+                maincontentText: 'Here you can set up a list that should be displyed',
+                width: 200
+              });
+            }
+          }
+        },
+      }
+      ]
+    }
+  });
+</script>
+
+    
